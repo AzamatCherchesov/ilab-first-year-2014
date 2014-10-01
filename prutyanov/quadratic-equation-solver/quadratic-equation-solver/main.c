@@ -6,7 +6,6 @@
 *   @copyright GNU GPL v2.0
 *
 *   @author Viktor Prutyanov mailto:vitteran@gmail.com 
-*   https://code.google.com/p/ilab-first-year-2014/source/browse/#git%2Fprutyanov%253Fstate%253Dclosed
 */
 
 #include <math.h>
@@ -15,7 +14,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-typedef enum result_t {ONE_ROOT = 1, INFINITY_SET = -1, NO_ROOTS = 0, TWO_ROOTS = 2, INVALID_EQUATION = -2, NULL_PTR_ARGUMENTS = -3};
+typedef enum result_t {ONE_ROOT = 1, INFINITY_SET = -1, NO_ROOTS = 0, TWO_ROOTS = 2, INVALID_EQUATION = -2, NULL_PTR_PARAMS = -3};
 
 typedef struct roots_t ///Struct that describes pair of roots 
 {
@@ -38,16 +37,17 @@ double discriminant (double a, double b, double c);
 *   @param *roots is a pointer to roots_t (struct of roots). Solution will be there.
 *   @param n_coeffs is integer number of coefficients
 *   @param epsilon is double value that describes accuracy of calculations
-*   @return number of roots or status.
+*   @return number of roots or INFINITY_SET or INVALID_EQUATION (can't solve) or NULL_PTR_PARAM (at least 1 of params is nullptr).
 */
+
 result_t solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon)
 {
 
-    if ((coeffs == nullptr) || (roots == nullptr)) return NULL_PTR_ARGUMENTS;
+    if ((coeffs == nullptr) || (roots == nullptr)) return NULL_PTR_PARAMS;
 
     for (int i = 3; i < n_coeffs; i++) //Function does not solve equations with max power more then 2.
     {
-        assert (0 <= i && i < n_coeffs, "Array index out of bounds");
+        assert ((0 <= i && i < n_coeffs, "Array index out of bounds"));
         if (coeffs[i] != 0)
         {
             return INVALID_EQUATION;
@@ -136,12 +136,13 @@ int main (void)
     printf("Enter coefficients in order from bigger to smaller power:\n");
     for (int i = n_coeffs - 1; i >= 0; i--)
     {
-        assert (0 <= i && i < n_coeffs, "Array index out of bounds");
+        assert ((0 <= i && i < n_coeffs, "Array index out of bounds"));
         scanf ("%lf",  &coeffs[i]);
     }
 
     printf ("Enter epsilon, if epsilon = 0 then uses default epsilon (DBL_EPSILON).\n");
-    printf ("If you do not know what does it means, go to https://en.wikipedia.org/wiki/Machine_epsilon or enter 0.\n");
+    printf ("Epsilon means least value that interpretes as 0.\n");
+    printf ("For further information, see https://en.wikipedia.org/wiki/Machine_epsilon \n");
 
     scanf ("%lf", &eps);
     if (eps == 0) eps = DBL_EPSILON;
