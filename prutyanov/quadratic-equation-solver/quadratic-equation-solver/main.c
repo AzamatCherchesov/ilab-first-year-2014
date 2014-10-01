@@ -1,3 +1,14 @@
+/**
+*   Program for solving quadratic and linear equations.
+*
+*   @date 09.2014 - 10.2014
+*
+*   @copyright GNU GPL v2.0
+*
+*   @author Viktor Prutyanov mailto:vitteran@gmail.com 
+*   https://code.google.com/p/ilab-first-year-2014/source/browse/#git%2Fprutyanov%253Fstate%253Dclosed
+*/
+
 #include <math.h>
 #include <stdio.h>
 #include <float.h>
@@ -13,7 +24,7 @@ typedef struct roots_t ///Struct that describes pair of roots
 };
 
 /**
-*   Auxillary function that calculates discriminant.
+*   @brief Auxillary function that calculates discriminant.
 *   @param a is first double coefficient
 *   @param b is second double coefficient
 *   @param c is third double coefficient
@@ -22,23 +33,21 @@ typedef struct roots_t ///Struct that describes pair of roots
 double discriminant (double a, double b, double c);
 
 /**
-*   An equation solving function.   
+*   @brief An equation solving function. 
 *   @param *coeffs is an array of double that describes coefficients
-*   @param *roots is a pointer to roots_t (struct of roots) 
+*   @param *roots is a pointer to roots_t (struct of roots). Solution will be there.
 *   @param n_coeffs is integer number of coefficients
 *   @param epsilon is double value that describes accuracy of calculations
+*   @return number of roots or status.
 */
-result_t solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon);
-
-
 result_t solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon)
 {
 
     if ((coeffs == nullptr) || (roots == nullptr)) return NULL_PTR_ARGUMENTS;
 
-    for (int i = 3; i < n_coeffs; i++) //If there exist coefficients roots with a degree higher than 2 then the equation can not be solved by this function
+    for (int i = 3; i < n_coeffs; i++) //Function does not solve equations with max power more then 2.
     {
-        assert (0 <= i && i <= n_coeffs);
+        assert (0 <= i && i < n_coeffs, "Array index out of bounds");
         if (coeffs[i] != 0)
         {
             return INVALID_EQUATION;
@@ -76,11 +85,11 @@ result_t solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double ep
         {
             if (fabs (c) <= epsilon)
             {
-                return INFINITY_SET; //Infinity set
+                return INFINITY_SET;
             }
             else
             {
-                return NO_ROOTS; //No roots
+                return NO_ROOTS;
             }
         }
         else
@@ -112,12 +121,6 @@ result_t solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double ep
     }
 }
 
-double discriminant (double a, double b, double c)
-{
-
-    return b * b - 4.0 * a * c;
-}
-
 int main (void)
 {
     int status = 0, n_coeffs = 0;
@@ -126,18 +129,20 @@ int main (void)
 
     printf ("Welcome to quadratic and linear equation solver!\n");
     printf ("Enter number of coefficients:\n");
-    scanf("%d", &n_coeffs);
+    scanf ("%d", &n_coeffs);
     double *coeffs = (double *)calloc (n_coeffs, sizeof(*coeffs));
     assert (coeffs != nullptr);
 
-    printf("Enter coefficients:\n");
+    printf("Enter coefficients in order from bigger to smaller power:\n");
     for (int i = n_coeffs - 1; i >= 0; i--)
     {
-        assert (0 <= i && i <= n_coeffs);
-        scanf("%lf",  &coeffs[i]);
+        assert (0 <= i && i < n_coeffs, "Array index out of bounds");
+        scanf ("%lf",  &coeffs[i]);
     }
 
-    printf ("Enter epsilon, if epsilon = 0 then uses default epsilon (DBL_EPSILON):\n");
+    printf ("Enter epsilon, if epsilon = 0 then uses default epsilon (DBL_EPSILON).\n");
+    printf ("If you do not know what does it means, go to https://en.wikipedia.org/wiki/Machine_epsilon or enter 0.\n");
+
     scanf ("%lf", &eps);
     if (eps == 0) eps = DBL_EPSILON;
 
@@ -166,6 +171,7 @@ int main (void)
             printf ("The equation you printed is not a quadratic or linear equation.\n");
             break;
         default:
+            printf ("If you see this message it means that something went wrong.");
             break;
     }
     
@@ -174,4 +180,10 @@ int main (void)
     #endif
 
     return 0;
+}
+
+double discriminant (double a, double b, double c)
+{
+
+    return b * b - 4.0 * a * c;
 }
