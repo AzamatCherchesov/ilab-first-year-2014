@@ -37,7 +37,7 @@ double discriminant (double a, double b, double c);
 *   @param *roots is a pointer to roots_t (struct of roots). Solution will be there.
 *   @param n_coeffs is integer number of coefficients
 *   @param epsilon is double value that describes accuracy of calculations
-*   @return number of roots or INFINITY_SET or INVALID_EQUATION (can't solve) or NULL_PTR_PARAM (at least 1 of params is nullptr).
+*   @return number of roots or -1 if set of roots is infinite or -2 if equation can't be solved or -3 if at least 1 of params is nullptr.
 */
 
 result_t solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon)
@@ -141,7 +141,6 @@ int main (void)
     }
 
     printf ("Enter epsilon, if epsilon = 0 then uses default epsilon (DBL_EPSILON).\n");
-    printf ("Epsilon means least value that interpretes as 0.\n");
     printf ("For further information, see https://en.wikipedia.org/wiki/Machine_epsilon \n");
 
     scanf ("%lf", &eps);
