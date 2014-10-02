@@ -1,7 +1,9 @@
 *.sdf
 *.vcxproj
+*.vcxproj.*
 *.sln
 *.suo
-*.vcxproj.filters
+html
+Doxyfile
 Debug
 Release

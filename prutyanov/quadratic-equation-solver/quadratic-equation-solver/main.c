@@ -1,42 +1,53 @@
+/**
+*   Program for solving quadratic and linear equations.
+*
+*   @date 09.2014 - 10.2014
+*
+*   @copyright GNU GPL v2.0
+*
+*   @author Viktor Prutyanov mailto:vitteran@gmail.com 
+*/
+
 #include <math.h>
 #include <stdio.h>
 #include <float.h>
 #include <stdlib.h>
+#include <assert.h>
 
-//Equation solving
+typedef enum result_t {ONE_ROOT = 1, INFINITY_SET = -1, NO_ROOTS = 0, TWO_ROOTS = 2, INVALID_EQUATION = -2, NULL_PTR_PARAMS = -3};
 
-typedef struct roots_t roots_t;
-
-struct roots_t ///Struct that describes pair of roots 
+typedef struct roots_t ///Struct that describes pair of roots 
 {
     double x1; ///First root
     double x2; ///Second root
 };
 
-const int ONE_ROOT = 1, INFINITY_SET = -1, NO_ROOTS = 0, TWO_ROOTS = 2, INVALID_EQUATION = -2, NULL_PTR_ARGUMENTS = -3;
-
-double discriminant (double a, double b, double c)
-{
 /**
-*    @param a is first coefficient
-*    @param b is second coefficient
-*    @param c is third coefficient
+*   @brief Auxillary function that calculates discriminant.
+*   @param a is first double coefficient
+*   @param b is second double coefficient
+*   @param c is third double coefficient
+*   @return double discriminant
 */
-    return b * b - 4.0 * a * c;
-}
+double discriminant (double a, double b, double c);
 
-int solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon)
-{
 /**
-*    @param *coeffs is an array of coefficients 
-*    @param *roots is a pointer to struct of roots 
-*    @param n_coeffs is number of coefficients
-*    @param epsilon describes accuracy of calculations
+*   @brief An equation solving function. 
+*   @param *coeffs is an array of double that describes coefficients
+*   @param *roots is a pointer to roots_t (struct of roots). Solution will be there.
+*   @param n_coeffs is integer number of coefficients
+*   @param epsilon is double value that describes accuracy of calculations
+*   @return number of roots or -1 if set of roots is infinite or -2 if equation can't be solved or -3 if at least 1 of params is nullptr.
 */
-    if ((coeffs == nullptr) || (roots == nullptr)) return NULL_PTR_ARGUMENTS;
 
-    for (int i = 3; i < n_coeffs; i++) //If there exist coefficients roots with a degree higher than 2 then the equation can not be solved by this function
+result_t solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon)
+{
+
+    if ((coeffs == nullptr) || (roots == nullptr)) return NULL_PTR_PARAMS;
+
+    for (int i = 3; i < n_coeffs; i++) //Function does not solve equations with max power more then 2.
     {
+        assert ((0 <= i && i < n_coeffs, "Array index out of bounds"));
         if (coeffs[i] != 0)
         {
             return INVALID_EQUATION;
@@ -74,11 +85,11 @@ int solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon
         {
             if (fabs (c) <= epsilon)
             {
-                return INFINITY_SET; //Infinity set
+                return INFINITY_SET;
             }
             else
             {
-                return NO_ROOTS; //No roots
+                return NO_ROOTS;
             }
         }
         else
@@ -91,11 +102,17 @@ int solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon
     else //Quadratic equation
     {
         double d = discriminant (a, b, c);
-        if (d >= 0)
+        if (d > epsilon)
         {
             roots->x1 = (-b + sqrt (d)) / (a * 2.0);
             roots->x2 = (-b - sqrt (d)) / (a * 2.0); //Two roots
             return TWO_ROOTS;
+        }
+        else if (-epsilon <= d && d <= epsilon)
+        {
+            roots->x1 = (-b) / (a * 2.0);
+            roots->x2 = (-b) / (a * 2.0); //Two equivalent roots
+            return ONE_ROOT;
         }
         else
         {
@@ -107,20 +124,25 @@ int solve_equation (double *coeffs, int n_coeffs, roots_t *roots, double epsilon
 int main (void)
 {
     int status = 0, n_coeffs = 0;
-    double eps = 0, *coeffs;
+    double eps = 0;
     roots_t roots = { };
 
+    printf ("Welcome to quadratic and linear equation solver!\n");
     printf ("Enter number of coefficients:\n");
-    scanf("%d", &n_coeffs);
-    coeffs = (double *)calloc (n_coeffs, sizeof(*coeffs));
+    scanf ("%d", &n_coeffs);
+    double *coeffs = (double *)calloc (n_coeffs, sizeof(*coeffs));
+    assert (coeffs != nullptr);
 
-    printf("Enter coefficients:\n");
+    printf("Enter coefficients in order from bigger to smaller power:\n");
     for (int i = n_coeffs - 1; i >= 0; i--)
     {
-        scanf("%lf",  &coeffs[i]);
+        assert ((0 <= i && i < n_coeffs, "Array index out of bounds"));
+        scanf ("%lf",  &coeffs[i]);
     }
 
-    printf ("Enter epsilon, if epsilon = 0 then uses default epsilon (DBL_EPSILON):\n");
+    printf ("Enter epsilon, if epsilon = 0 then uses default epsilon (DBL_EPSILON).\n");
+    printf ("For further information, see https://en.wikipedia.org/wiki/Machine_epsilon \n");
+
     scanf ("%lf", &eps);
     if (eps == 0) eps = DBL_EPSILON;
 
@@ -149,9 +171,19 @@ int main (void)
             printf ("The equation you printed is not a quadratic or linear equation.\n");
             break;
         default:
+            printf ("If you see this message it means that something went wrong.");
             break;
     }
+    
+    #ifdef _DEBUG
+        system("pause");
+    #endif
 
-    system("pause");
     return 0;
+}
+
+double discriminant (double a, double b, double c)
+{
+
+    return b * b - 4.0 * a * c;
 }
