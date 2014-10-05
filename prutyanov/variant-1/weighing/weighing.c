@@ -46,15 +46,15 @@ int is_possible_to_weight(unsigned int m)
 int main()
 {
     unsigned int n = 0;
-    printf("Enter number you want to weight on scales with two bowls and 1, 4, 16 etc. weights:\n");
-    scanf("%u", &n);
-    switch(is_possible_to_weight(n))
+    printf ("Enter number you want to weight on scales with two bowls and 1, 4, 16 etc. weights:\n");
+    scanf ("%u", &n);
+    switch (is_possible_to_weight(n))
     {
         case 1:
-            printf("YES\n");
+            printf ("YES\n");
             break;
         case 0:
-            printf("NO\n");
+            printf ("NO\n");
             break;
         default:
             printf ("If you see this message it means that something went wrong.");

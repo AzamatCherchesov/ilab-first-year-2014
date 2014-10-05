@@ -17,7 +17,7 @@
 
    @param m unsigned int number
 
-   @return 1 if number is square-free 0 if not
+   @return 1 if number is square-free, 0 if isn't
 */
 int is_square_free(unsigned int m)
 {
@@ -34,15 +34,15 @@ int is_square_free(unsigned int m)
 int main()
 {
     unsigned int n = 0;
-    printf("Enter positive number you want to determine does it contains square or not:\n");
-    scanf("%u", &n);
-    switch(is_square_free(n))
+    printf ("Enter positive number you want to determine does it contains square or not:\n");
+    scanf ("%u", &n);
+    switch (is_square_free (n))
     {
         case 1:
-            printf("NO\n");
+            printf ("NO\n");
             break;
         case 0:
-            printf("YES\n");
+            printf ("YES\n");
             break;
         default:
             printf ("If you see this message it means that something went wrong.");
