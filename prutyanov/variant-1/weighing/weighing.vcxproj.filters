@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\prime-numbers\weighing.c">
+    <ClCompile Include="weighing.c">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>

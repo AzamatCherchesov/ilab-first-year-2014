@@ -10,6 +10,9 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="weighing.c" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F680D40C-3456-4405-9B84-7CE334B247AA}</ProjectGuid>
     <RootNamespace>weighing</RootNamespace>
@@ -64,9 +67,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\prime-numbers\weighing.c" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
