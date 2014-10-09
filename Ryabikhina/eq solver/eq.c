@@ -8,7 +8,7 @@ int main(){
    
    scanf("%lg,%lg,%lg", &a, &b, &c);
    
-  /* if (a==0 && b!=0){
+   if (a==0 && b!=0){
 		x1=-c/b;
 		printf("%lg",x1);
    }
@@ -28,7 +28,7 @@ int main(){
 			}
     }
     if ((a==0)&&(b==0))
-	   printf("бесконечно");*/
+	   printf("бесконечно");
 	   
 	perintf("%lg, %lg, %lg", a, b, c);   
 	getchar();
