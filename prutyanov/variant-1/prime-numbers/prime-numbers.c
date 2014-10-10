@@ -87,19 +87,19 @@ int main()
 
     for (int i = 0; i < n; i++)
     {
-        assert(0 <= i && i < n);
-        scanf("%u", &in_array[i]);
+        assert (0 <= i && i < n);
+        scanf ("%u", &in_array[i]);
     }
 
-    prime_numbers(in_array, out_array, n, &c);
+    prime_numbers (in_array, out_array, n, &c);
 
     for (int i = 0; i < c; i++)
     {
-        assert(0 <= i && i < n);
-        printf("%u ", out_array[i]);
+        assert (0 <= i && i < n);
+        printf ("%u ", out_array[i]);
     }
 
-    printf("\n");
+    printf ("\n");
 
     #ifdef _DEBUG
         system ("pause");
