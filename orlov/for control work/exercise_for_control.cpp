@@ -15,10 +15,10 @@ unsigned int max_square(unsigned int num);
 int main(){
  unsigned int n=0;
  
-// scanf("%u",&n);
-// ex_A(n);
-// scanf("%u",&n);
-// ex_B(n);
+ scanf("%u",&n);
+ ex_A(n);
+ scanf("%u",&n);
+ ex_B(n);
  scanf("%u",&n);
  ex_C(n);
  
@@ -55,9 +55,9 @@ void ex_B(int n){
    for (i = 0;i < count;i++)  printf("%i ",square[i]);
    printf("\n");
 }
-
+//-----------------------------------------------------------------------
 int is_square(int num){
-  if (sqrt(num) - (int )sqrt(num) == 0)  return 1;//sqrt(n) - round(n) == 0
+  if (sqrt(num) - (int )sqrt(num) == 0)  return 1;
     else return 0;
 }
 //==============================================================================
@@ -67,7 +67,7 @@ unsigned int max_square(unsigned int num){
     if (is_square(i))  return i;
   
 }
-
+//-----------------------------------------------------------------------
 void ex_C(unsigned int n){
   
   int a = 0, b = 0, c = 0,d = 2;                   
@@ -85,7 +85,7 @@ void ex_C(unsigned int n){
      d = n1;
   
      if (!is_square(d)){
-       a = (int )(sqrt(a)-1) * (sqrt(a)-1);             // a=a-1
+       a = (int )((sqrt(a)-1) * (sqrt(a)-1));             // a=a-1
        n1 = n - a;
      }
      
@@ -100,7 +100,7 @@ void ex_D(int n, int k){
   int c[N][K] = {};
   int i = 0, j = 0;
   
-  for (i = 0;i < N;++){
+  for (i = 0;i < N;i++){
    c[0][i]=1;
    if (i <= 9)  c[i][1] = 1;
      else c[i][1] = 0;
