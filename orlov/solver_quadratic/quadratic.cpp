@@ -1,104 +1,106 @@
 #include <stdio.h>
 #include <math.h>
-
+/*{
+this struck describe cofficients of 
+quadratic equation: a*x^2 + b*x + c = 0
+}*/
 struct coeff
 {
-       double a,b,c;
+   double a,b,c;
 };
 //==============================================================================
+/*{
+it needs for safe roots quadratic equation
+and number of them
+}*/
 struct root
 {
-       double x1,x2;
-       char num;
+   double x1,x2;
+   char num;
 };
 //==============================================================================
-double discr(coeff K)
+/*{
+this function calculate discriminant of 
+quadratic equation
+take cofficient of quadratic equation
+}*/
+double Discr(coeff K)
 {
-       return K.b*K.b-4*K.a*K.c;
+   return K.b * K.b - 4 * K.a * K.c;
 }
 //==============================================================================
-double ROOTS(coeff &K,double D,bool n)
+double Roots(coeff K,double D,int n)
 {
-       if(n)  return (-K.b+sqrt(D))/(2*K.a);
-       if(!n) return (-K.b-sqrt(D))/(2*K.a);
+   if(n == 1)  return (-K.b + sqrt(D)) / (2 * K.a);
+   if(n == 2)  return (-K.b - sqrt(D)) / (2 * K.a);
 }
 //==============================================================================
-void equation(coeff K, root &R)
+/*{
+this function calculate roots of quadratic equation
+if there ara two different roots roots.num = 2(namber of roots)
+if there one root (two similar roots) roots.num = 1
+else roots.num = 0
+roots.x1 and roots.x2 safe roots
+It return struct "root"
+}*/
+root equation(coeff koeff)
 {
-       double D;
-            if(K.a==0)                                                          //уровнение не квадратное
-            {
-                 R.x1=-K.c/K.b;
-                 R.num=1;                             
-            }
-            else 
-                if (K.b==0)
-                {
-                    if (K.c<=0)
-                    {
-                      R.x1=sqrt(K.c/K.a);                                       //корни отличаются 
-                      R.x2=-R.x1;                                               //только знаком
-                      R.num=2;
-                    }
-                    else
-                       {
-                              R.num=0;
-                       }                                                    
-                } 
-                else
-                    if (K.c==0)
-                    {
-                        R.x1=0;
-                        R.x2=(-K.b/K.a);                                        //один корень ноль
-                        R.num=2; 
-                    }                                                           //, другой соответственно                    }
-                    else
-                    {
-                      D = discr(K); 
-                      if (D>0)                                                  //2 корня 
-                      {                                  
-                          R.x1 = ROOTS(K,D,0);
-                          R.x2 = ROOTS(K,D,1);
-                          R.num=2;   
-                       }
-                       else
-                           if(D==0)
-                              {
-                                 R.x1=ROOTS(K,D,0);                             //один корень
-                                 R.x2=R.x1;
-                                 R.num=1;                                       
-                              }       
-                           else 
-                              if(D<0) R.num=0;                                  //нет корней
-                    }            
+   root roots={};
+   double discr=0;
+   
+     if(koeff.a == 0)                                        
+      {
+        if(koeff.b != 0)
+        {
+          roots.x1 = -koeff.c / koeff.b;
+          roots.num = 1;                             
+        }
+         else roots.num = 0;
+      }
+       else 
+       {
+         discr = Discr(koeff); 
+         if (discr>0)                                         //2 roots 
+         {                                  
+           roots.x1 = Roots(koeff,discr,1);
+           roots.x2 = Roots(koeff,discr,2);
+           roots.num = 2;   
+         }
+          else
+           if(discr==0)
+           {
+             roots.x1=Roots(koeff,discr,1);              //1 root
+             roots.x2=roots.x1;
+             roots.num=1;                                       
+           }       
+           else 
+            if(discr<0) roots.num=0;                    //0 root
+        }        
+   return roots;    
  }
 //==============================================================================
+/*{
+main programm are working while all coefffisiants of 
+quadratic equation are different from 0
+}*/
 main()
 {    
       printf("ENTER \"0 0 0\"  TO EXIT\n");
-      printf("PLEASE ENTER JUST NUMERALS\n"); 
-      coeff  K;
-      root   R;
-      double x1=0,x2=0;
-      char   num=0;
-      K.a = 0;
-      K.b = 0;
-      K.c = 0;
-      R.x1 = 0;
-      R.x2 = 0;
-      R.num = 0;
+      printf("please, enter 3 coefficients of quadratic equation\n"); 
+      coeff  coeff={};
+      root   roots={};
       do
       {
-          scanf("%lg %lg %lg", &K.a, &K.b, &K.c);                                  //ввод       
-          equation(K,R);
-          switch(R.num)
+          scanf("%lg %lg %lg", &coeff.a, &coeff.b, &coeff.c);                       //entering       
+          roots = equation(coeff);
+          switch(roots.num)
             {
-               case 2:printf("x1=%lg\nx2=%lg\n",R.x1,R.x2);break;
-               case 1:printf("x=%lg\n",R.x1);break;
-               case 0:printf("the equation haven't roots\n");break; 
-               default: break;
+              case 2:printf("x1=%lg\nx2=%lg\n",roots.x1,roots.x2);break;
+              case 1:printf("x=%lg\n",roots.x1);break;
+              case 0:printf("the equation haven't roots\n");break;
+              default: break;
             }
       }
-      while((K.a!=0)||(K.b!=0)||(K.c!=0));
+      while((coeff.a!=0)||(coeff.b!=0)||(coeff.c!=0));
 
 }
