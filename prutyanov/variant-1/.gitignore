@@ -3,6 +3,7 @@
 *.vcxproj.*
 *.sln
 *.suo
+*.opensdf
 html
 Doxyfile
 Debug
