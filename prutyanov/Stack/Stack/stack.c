@@ -125,10 +125,6 @@ bool Stack_dump(Stack_t *stack)
         if (Stack_ok(stack))
         {
             fprintf (stdout, "Stack [0x%x] is OK. \n\tcount = %d\n\tsize = %d\n\tdata [0x%x]:\n", stack, stack->count, stack->size, stack->data);
-            for  (size_t i = 0; i < (stack->size); i++)
-            {
-                fprintf(stdout, "\t[%d] [0x%x] %lf\n", i, &((stack->data)[i]), (stack->data)[i]);
-            }
         }
         else if (!Stack_ok(stack))
         {

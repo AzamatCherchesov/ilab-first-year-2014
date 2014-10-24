@@ -15,7 +15,6 @@
 #include "stack.h"
 #include <string.h>
 #include <math.h>
-#include <locale.h>
 
 #define ADD  1
 #define SUB  2
@@ -50,9 +49,6 @@ bool one_arg_operation(Stack_t *stack, int operation);
 
 int main()
 {
-    setlocale(LC_ALL, "Russian");
-    printf("Мы русские и поэтому мы победим. А.С.Суворов\n");
-
     char command[5];
     size_t size = 0;
     double arg = 0;
