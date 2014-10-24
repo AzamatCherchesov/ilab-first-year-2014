@@ -61,11 +61,11 @@ int main()
     printf ("Enter maximum length:\n");
     scanf ("%u", &n);
     
-    unsigned int *array0 = (unsigned int *)calloc (n + 1, sizeof(unsigned int));
-    unsigned int *array1 = (unsigned int *)calloc (n + 1, sizeof(unsigned int));
-    unsigned int *array2 = (unsigned int *)calloc (n + 1, sizeof(unsigned int));
+    unsigned int *array0 = (unsigned int *)calloc (n + 1, sizeof(unsigned int)); ///<Current row of function values
+    unsigned int *array1 = (unsigned int *)calloc (n + 1, sizeof(unsigned int)); ///<Previous row
+    unsigned int *array2 = (unsigned int *)calloc (n + 1, sizeof(unsigned int)); ///<Before the previous row
 
-    array2[0] = 1;
+    array2[0] = 1; 
     array1[0] = 1;
     array0[0] = 1;
     array1[1] = 1;
