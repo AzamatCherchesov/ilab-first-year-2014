@@ -41,7 +41,7 @@ double dis(double a, double b, double c)
 }
 
 //{=================================================================================
-//! roots - calculate the discriminant a square equation by its coefficients.
+//! roots - calculate number of roots a square equation by its coefficients.
 //!
 //! @param     a   Equation a-coefficient
 //! @param     b   Equation b-coefficient
@@ -71,14 +71,14 @@ int roots(double a, double b, double c)
 }
 
 //{=================================================================================
-//! solve - calculate the discriminant a square equation by its coefficients.
+//! solve - calculate root with number n a square equation by its coefficients.
 //!
 //!	@param	   n   root number
 //! @param     a   Equation a-coefficient
 //! @param     b   Equation b-coefficient
 //! @param     c   Equation c-coefficient
 //! 
-//! @return        number of roots
+//! @return        root with nomber n
 //! 
 //}=================================================================================
 
