@@ -16,18 +16,6 @@
 #include "stack.h"
 #include <assert.h>
 
-#ifdef _DEBUG
-    #define VERIFY(stack)                                                                                       \
-        if (!Stack_ok (stack))                                                                                  \
-        {                                                                                                       \
-            printf("Error in %s on %d in function %s line:", __FILE__, __LINE__, __FUNCTION__);                 \
-            Stack_dump(stack);                                                                                  \
-            abort();                                                                                            \
-        }
-#else
-    #define VERIFY(stack) ((void)0)
-#endif
-
 bool Stack_ctor(size_t size, Stack_t* stack)
 {
     if (stack == nullptr) return false;
