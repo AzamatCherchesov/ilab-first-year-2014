@@ -1,33 +1,83 @@
 #include <stdio.h>
+#include <assert.h>
 
 
-//the function lays out the number on the power of two
- void solve( unsigned int n)
+//the function take the number
+//returns degrees of two in massive
+
+ int* solve( int n)
  {
 
-  int a[32], k, i;
+  int i = 0, j = 0, k = 1 ,number = 0;
+  int* a= ( int ) calloc ( 32, sizeof( int ) );
+  int* b= ( int ) calloc ( 32, sizeof( int ) );
 
-  k = 0;
-  while (n > 0)
+//the binary representation of a number
+
+  while ( n >= 1 )
   {
-    i = 1;
-    while (i * 2 <= n)
-        i = i * 2;
-    a[k] = i;
-    k++;
-    n = n - i;
-  };
-  for (i = k - 1; i >= 0; i--)
-    printf("%d ", a[i]);
+
+    if ( n % 2 == 0 )
+        {
+            a[i] = 0;
+            i++;
+        }
+
+    else
+        {
+            a[i] = 1;
+            i++;
+        };
+
+    n = ( n - n % 2 ) / 2;
+
+  }
+
+//formation of degrees
+
+  for ( j = 0; j < i; j++ )
+  {
+
+   assert ( ( a[j] == 0 ) || (a[j] == 1) );
+
+   if ( a[j] != 0 )
+   {
+       b[number]= a[j] * k;
+       number++;
+   }
+
+   k = k * 2;
+
+  }
+
+  free(a);
+
+  return b;
+
  }
 
-main()
+
+int main()
 {
-    unsigned int n;
+    int n = 0, i = 0;
+    int* d= (int) calloc ( 32, sizeof(int) );
 
     printf("write the number: ");
-    scanf("%u",&n);
-    solve(n);
+    scanf("%d",&n);
+
+    assert ( n > 0 );
+
+    d = solve(n);
+
+//printing the answer
+    while ( d[i] != 0 )
+      {
+        printf("%d ", d[i] );
+        i++;
+      }
+
+
+    free ( d );
 
     return 0;
 }
