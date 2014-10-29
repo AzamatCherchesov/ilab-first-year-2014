@@ -1,0 +1,8 @@
+DEF_CMD(PUSH,   1, {}, "push",  1)
+DEF_CMD(POP,    2, {}, "pop",   0)
+DEF_CMD(DUMP,   3, {}, "dump",  0)
+DEF_CMD(ADD,    4, {}, "add",   0)
+DEF_CMD(SUB,    6, {}, "sub",   0)
+DEF_CMD(MUL,    7, {}, "mul",   0)
+DEF_CMD(DIV,    8, {}, "div",   0)
+DEF_CMD(END,    9, {}, "end",   0)

@@ -10,154 +10,88 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <assert.h>
 
 /**
-    Function that determines is word good of not (doesn't contain 2 units streak and contains determined units)
+    @brief Copies src array to dst array
 
-    @param word is unsigned int for determination
-    @param length is unsigned int length of word
-    @param units is amount of units in word to be good
+    @param src is pointer to unsigned int source array
+    @param dst is pointer to unsigned int destination array
+    @param length is unsigned int length of array
 
-    @return 1 if word is good, 0 if isn't
+    @return 0 if everything is OK, 1 if not
 */
-int is_good_word(unsigned int word, unsigned int length, unsigned int units);
-
-/**
-    Realisation power function for only unsigned ints as base and exponent.
-
-    @param base is unsigned int base
-    @param n is unsigned int exponent
-
-    @return unsigned int base^n
-*/ 
-unsigned int power(unsigned int base, unsigned int n);
-
-/**
-    Function that calculates amount of good words with given length and amount of units
-
-    @param length is unsigned int length of word
-    @param units is unsigned int amount of units 
-
-    @return amount of good words with given parameters
-*/
-unsigned int good_words_amount(unsigned int length, unsigned int units);
-
-/**
-    Function that calculates length of word binary presentation
-
-    @param word is unsigned int number for calculating length
-
-    @return int length of binary word
-*/
-unsigned int word_length(unsigned int word);
-
-/**
-    Function that finds 2 units streak
-
-    @param word is unsigned int number for streak find
-    @param length is unsigned int length of word
-
-    @return 1 if 2 unit streak exist, 0 if doesn't exist
-*/
-int is_2_units_streak(unsigned int word, unsigned int length);
-
-/**
-    Function that calculates amount of units in binary presentation of number
-
-    @param word is unsigned int number for calculating amount of units
-    @param length is unsigned int length of word
-    
-    @return unsigned int amount of units
-*/
-unsigned int units_amount(unsigned int word, unsigned int length);
-
-int main()
+int array_copy(unsigned int *src, unsigned int *dst, unsigned int length)
 {
-    unsigned int n = 0;
-    unsigned int amount = 0;
-
-    printf ("Enter maximum length:\n");
-    scanf ("%u", &n);
-
-    for (unsigned int i = 0; i <= n; i++)
+    if ((src == nullptr) || (dst == nullptr)) return 1;
+    for (unsigned int i = 0; i < length; i++)
     {
-        for (unsigned int j = 0; j <= i; j++)
-        {
-            amount = good_words_amount (i, j);
-            if (amount) printf ("%u ", amount);
-        }
-        printf("\n");
-    }
-
-    #ifdef _DEBUG
-        system ("pause");
-    #endif
-}
-
-
-int is_good_word(unsigned int word, unsigned int length, unsigned int units)
-{
-    if ((units_amount (word, length) == units) && !is_2_units_streak (word, length))
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-unsigned int power(unsigned int base, unsigned int n)
-{
-    if (n == 0)
-    {
-        return 1;
-    }
-    else
-    {
-        return power (base, n - 1) * base;
-    }
-}
-
-unsigned int good_words_amount(unsigned int length, unsigned int units)
-{
-    unsigned int amount = 0;
-    for (int w = 0; w < power (2, length); w++)
-    {
-        if (is_good_word(w, length, units))
-        {
-            amount++;
-        }
-    }
-    return amount;
-}
-
-unsigned int word_length(unsigned int word)
-{
-    unsigned int i = 0;
-    while (power (2, i) < word)
-    {
-        i++;
-    }
-    return i;
-}
-
-int is_2_units_streak(unsigned int word, unsigned int length)
-{
-    for (int i = 1; i < length; i++)
-    {
-        if ((word & (1 << i)) && (word & (1 << i - 1))) return 1;
+        assert (0 <= i && i < length);
+        dst[i] = src[i];
     }
     return 0;
 }
 
-unsigned int units_amount(unsigned int word, unsigned int length)
+/**
+    @brief Prints src array without zero values
+
+    @param src is pointer to unsigned int source array
+    @param length is unsigned int length of array
+
+    @return 0 if everything is OK, 1 if not
+*/
+int array_print(unsigned int *src, unsigned int length)
 {
-    unsigned int units = 0;
-    for (int i = 0; i < length; i++)
+    if (src == nullptr) return 1;
+    for (unsigned int i = 0; i < length; i++)
     {
-        if (word & (1 << i)) units++;
+        assert (0 <= i && i < length);
+        if (src[i] != 0)
+        {
+            printf ("%u ", src[i]);
+        }
     }
-    return units;
+    return 0;
+}
+
+int main()
+{
+    unsigned int n = 0;
+
+    printf ("Enter maximum length:\n");
+    scanf ("%u", &n);
+    
+    unsigned int *array0 = (unsigned int *)calloc (n + 1, sizeof(unsigned int)); ///<Current row of function values
+    unsigned int *array1 = (unsigned int *)calloc (n + 1, sizeof(unsigned int)); ///<Previous row
+    unsigned int *array2 = (unsigned int *)calloc (n + 1, sizeof(unsigned int)); ///<Before the previous row
+
+    array2[0] = 1; 
+    array1[0] = 1;
+    array0[0] = 1;
+    array1[1] = 1;
+    
+    printf ("1\n1 1\n");
+
+    for (int i = 2; i <= n; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            array0[j] = array1[j] + array2[j - 1];
+        }
+        array_copy (array1, array2, n + 1);
+        array_copy (array0, array1, n + 1);
+        array_print (array0, n + 1);
+        printf("\n");
+    }
+
+    free(array0);
+    free(array1);
+    free(array2);
+    array0 = nullptr;
+    array1 = nullptr;
+    array2 = nullptr;
+
+    #ifdef _DEBUG
+        system ("pause");
+    #endif
 }
