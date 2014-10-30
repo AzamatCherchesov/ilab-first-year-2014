@@ -55,7 +55,7 @@ int roots(double a, double b, double c)
 {
 	if ((a == 0) && (b == 0))
 	{
-		if (c == 0) { return -1; }
+		if (c == 0) { return -1; } // -1 <=> infinity
 		else return 0;
 	}
 	else
@@ -84,7 +84,7 @@ int roots(double a, double b, double c)
 
 double solve(int n, double a, double b, double c)
 {
-	if (a == 0) { return b / c; }
+	if (a == 0) { return (-1)*(c / b); }
 	else
 	{
 		if (n == 1) { return ((-b - sqrt(dis(a, b, c))) / (2 * a)); }
