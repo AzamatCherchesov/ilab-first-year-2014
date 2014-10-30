@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-#include <conio.h>
+#include <stdlib.h>
 
 
 void ex_A(int n);                                // for first exercise 
@@ -13,16 +13,16 @@ int is_square(int num);
 unsigned int max_square(unsigned int num);
 
 int main(){
- unsigned int n=0;
+  unsigned int n=0;
  
- scanf("%u",&n);
- ex_A(n);
- scanf("%u",&n);
- ex_B(n);
- scanf("%u",&n);
- ex_C(n);
+  scanf("%u",&n);
+  ex_A(n);
+  scanf("%u",&n);
+  ex_B(n);
+  scanf("%u",&n);
+  ex_C(n);
  
-    getch();
+   system("PAUSE");
  return 0;   
 }
 

@@ -1,12 +1,26 @@
+/*Author : Perov A. A.
+ *
+ * quadratic equation solver
+ *
+ * 24.10.2014
+*/
 #include <stdio.h>
 #include <math.h>
 
-const double everynumber = 3;
+/*
+ * if qudratic equation has 3 solutions, every real number is a solution
+ * so this constant shows that every number is a solution
+*/
+const int everynumber = 3;
 
 int solving(double a, double b, double c, double *x1, double *x2);
 
-void output(double x1,double x2, double number);
+void output(double x1,double x2, int number);
 
+/*solves equation ax^2+bx+c=0;
+ *takes factors a, b, c
+ *outputs solutions
+*/
 int main()
 {
     double a = 0, b = 0, c = 0, x1 = 0, x2 = 0;
@@ -19,10 +33,11 @@ int main()
 int solving(double a, double b, double c, double *x1, double *x2)
 {
 
-//solves equation ax^2+bx+c=0;
-//takes factors a, b, c
-//puts solutions in x1 and x2
-//returns number of roots
+/*solves equation ax^2+bx+c=0;
+ *takes factors a, b, c
+ *puts solutions in x1 and x2
+ *returns number of roots
+*/
 
     int number = 0;
     if (a == 0) {
@@ -57,22 +72,25 @@ int solving(double a, double b, double c, double *x1, double *x2)
     return (number);
 }
 
-void output(double x1,double x2, double number)
+void output(double x1,double x2, int number)
 {
 
-//outputs solutions
-//takes solutions and their number
+/*outputs solutions
+ *takes solutions and their number
+*/
 
-    if (number == everynumber) {
-        printf("every number is a root");
-    }
-    else if (number == 0) {
-        printf("no roots");
-    }
-    else if (number == 1) {
-        printf("x = %lg", x1);
-    }
-    else {
-        printf("x1 = %lg, x2 = %lg", x1, x2);
+    switch ( number )
+    {
+        case everynumber:
+            printf("every number is a root");
+            break;
+        case 2:
+            printf("x1 = %lg, x2 = %lg", x1, x2);
+            break;
+        case 1:
+            printf("x = %lg", x1);
+            break;
+        default :
+            printf("no roots");
     }
 }
