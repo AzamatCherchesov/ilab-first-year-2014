@@ -6,13 +6,31 @@
 
 int main()
 {
-    Stack* st = stack_ctor();
-    push(st,10);
-    push(st,20);
-    printf("poped %d element\n", pop(st));
-    printf("poped %d element\n", pop(st));
-    printf("poped %d element\n", pop(st));
+    Stack* st = stack_ctor ( 4 );
+
+    if ( st == NULL )
+    {
+        printf ( "No stack - no work." );
+
+        exit ( -1 );
+    }
+
+    push ( st, 10 );
+    push ( st, 20 );
+
+    int k = 0;
+    int i = 0;
+
+    for ( i = 0; i < 10; i++ )
+    {
+        k = pop ( st );
+        if ( k == ERR_EMPTY_STACK ) printf ( "I can't pop anything :(\n" );
+
+        else
+        {
+            printf ( "%d\n", k );
+        }
+    }
 
     return 0;
-
 }
