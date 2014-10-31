@@ -1,5 +1,5 @@
 /**
-*   Program for creation encyclopedia of russian XIX century life (A.S.Pushkin "Eugene Onegin")
+*   Disassmebler
 *
 *   @date 10.2014
 *
@@ -45,27 +45,37 @@ int main(int argc, char *argv[])
 
     bool next_is_command = true;
     double val = -1;
+    int count = 0;
 
     while (!feof (in_file))
     {
         fread ((void *)(&val), sizeof (double), 1, in_file);
         if (next_is_command)
         {
-            #define DEF_CMD(cmd, num, code, name, args)      \
-                if(num == val)                               \
-                {                                            \
-                    if (args == 1)                           \
-                    {                                        \
-                        fprintf(out_file, "%s ", name);      \
-                        next_is_command = false;             \
-                    }                                        \
-                    else                                     \
-                    {                                        \
-                    fprintf(out_file, "%s\n", name);         \
-                    }                                        \
-                }
-            #include "commands.h"
+            if (val == -1) 
+            {
+                break;
+            }
+            #define DEF_CMD(cmd, num, code, name, args)  \
+            else if (num == val)                         \
+            {                                            \
+                if (args == 1)                           \
+                {                                        \
+                    fprintf (out_file, "%s ", name);     \
+                    next_is_command = false;             \
+                }                                        \
+                else                                     \
+                {                                        \
+                    fprintf (out_file, "%s\n", name);    \
+                }                                        \
+            }
+            #include "..\include\commands.h"
             #undef DEF_CMD
+            else
+            {
+                printf("%lf (#%d) : invalid or unsupported command\n", val, count);
+                break;
+            }
         }
         else
         {
@@ -73,6 +83,7 @@ int main(int argc, char *argv[])
             next_is_command = true;
         }
         val = -1;
+        count++;
     }
 
     
