@@ -113,6 +113,10 @@ bool Stack_dump(Stack_t *stack)
         if (Stack_ok(stack))
         {
             fprintf (stdout, "Stack [0x%x] is OK. \n\tcount = %d\n\tsize = %d\n\tdata [0x%x]:\n", stack, stack->count, stack->size, stack->data);
+            for (int i = 0; i < stack->count; i++)
+            {
+                printf("\t[%d] %lf\n", i, (stack->data)[i]);
+            }
         }
         else if (!Stack_ok(stack))
         {
@@ -131,4 +135,21 @@ size_t Stack_get_size(Stack_t *stack)
 size_t Stack_get_count(Stack_t *stack)
 {
     return stack->count;
+}
+
+element_t Stack_peak(Stack_t *stack, bool *success)
+{
+    VERIFY (stack);
+    if (Stack_ok (stack) && !Stack_empty (stack))
+    {
+        *success = true;
+        VERIFY (stack);
+        return (stack->data)[(stack->count)-1];
+    }
+    else
+    {
+        *success = false;
+        VERIFY (stack);
+        return 0;
+    }
 }
