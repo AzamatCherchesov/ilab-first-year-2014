@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.4.1, 2014-11-06T13:21:47. -->
+<!-- Written by Qt Creator 2.4.1, 2014-11-06T22:43:48. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -30,7 +30,7 @@
    <value type="bool" key="EditorConfiguration.MouseNavigation">true</value>
    <value type="int" key="EditorConfiguration.PaddingMode">1</value>
    <value type="bool" key="EditorConfiguration.ScrollWheelZooming">true</value>
-   <value type="int" key="EditorConfiguration.SmartBackspaceBehavior">0</value>
+   <value type="int" key="EditorConfiguration.SmartBackspaceBehavior">1</value>
    <value type="bool" key="EditorConfiguration.SpacesForTabs">true</value>
    <value type="int" key="EditorConfiguration.TabKeyBehavior">0</value>
    <value type="int" key="EditorConfiguration.TabSize">8</value>
@@ -101,7 +101,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">2</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">D:/Oleg/ilab/repositiry/ilab-first-year-2014/orlov/for control work/ex_C-build-desktop-Qt_4_8_1_for_Desktop_-_MinGW__Qt_SDK_________</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">D:/Oleg/stack_double-build-desktop-Qt_4_8_1_for_Desktop_-_MinGW__Qt_SDK_________</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId">4</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
@@ -151,7 +151,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">0</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">D:/Oleg/ilab/repositiry/ilab-first-year-2014/orlov/for control work/ex_C-build-desktop-Qt_4_8_1_for_Desktop_-_MinGW__Qt_SDK_______</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">D:/Oleg/stack_double-build-desktop-Qt_4_8_1_for_Desktop_-_MinGW__Qt_SDK_______</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId">4</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
@@ -201,7 +201,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">2</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">D:/Oleg/ilab/repositiry/ilab-first-year-2014/orlov/for control work/ex_C-build-desktop-Qt_4_7_4_for_Desktop_-_MinGW_4_4__Qt_SDK_________</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">D:/Oleg/stack_double-build-desktop-Qt_4_7_4_for_Desktop_-_MinGW_4_4__Qt_SDK_________</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId">3</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
@@ -251,7 +251,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">0</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">D:/Oleg/ilab/repositiry/ilab-first-year-2014/orlov/for control work/ex_C-build-desktop-Qt_4_7_4_for_Desktop_-_MinGW_4_4__Qt_SDK_______</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">D:/Oleg/stack_double-build-desktop-Qt_4_7_4_for_Desktop_-_MinGW_4_4__Qt_SDK_______</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId">3</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
@@ -332,12 +332,12 @@
      <value type="int">13</value>
      <value type="int">14</value>
     </valuelist>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ex_C</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">stack_double</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4RunConfiguration.BaseEnvironmentBase">2</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ex_C.pro</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">stack_double.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseTerminal">true</value>
     <valuelist type="QVariantList" key="Qt4ProjectManager.Qt4RunConfiguration.UserEnvironmentChanges"/>
