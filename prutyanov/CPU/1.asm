@@ -1,15 +1,15 @@
-push 2
-pop ax
-push 1000
-push 1
-:0
-push ax
-mul
-pop ax
-push ax
+in
+call _frac
 out
-push ax
-push 1000
-push ax
-jb :0
 end
+:frac
+dup
+push 1
+je _l1
+dup
+push 1
+sub
+call _frac
+mul
+:l1
+ret
