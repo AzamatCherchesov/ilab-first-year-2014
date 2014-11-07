@@ -1,15 +1,9 @@
 #include "stack_double.h"
-/*
-this is function for stack
-*/
 
 #include <stdio.h>
 #include <malloc.h>
 #include <assert.h>
 
-/*{
-  inicialize stack
-}*/
 stack* Stack_Ini()
 {
     stack *st;
@@ -17,9 +11,6 @@ stack* Stack_Ini()
     st->size = START_STK_SIZE;
     st->buf = (double *)calloc(st->size, sizeof(double));
 }
-/*{
-  delete stack
-}*/
 
 stack Stack_Del (stack *st)
 {
@@ -29,7 +20,7 @@ stack Stack_Del (stack *st)
     free(st);
 }
 
-int Stack_Get_Size(const satck *st)
+int Stack_Get_Size(const stack *st)
 {
     return st->count;
 }
@@ -46,30 +37,33 @@ int Is_Stack_Bad(const stack *st)
 void Stack_Dump(const stack *st)
 {
     printf("st [%i],  %s\n", st,ERR[Is_Stack_Bad(st)]);
-printf("{\n");
-printf("count = %i\n", st->count);
-printf("data [%i] max = %i\n", st->buf, st->size);
-printf("\n");
-for (int i = 0; i < st->size; i++)
-printf("[%i] = %f\n", i, st->buf[i]);
-printf("}\n");
+    printf("{\n");
+    printf("count = %i\n", st->count);
+    printf("data [%lg] max = %i\n", st->buf, st->size);
+    printf("\n");
+    int i = 0;
+    for (i = 0; i < st->count; i++)
+      printf("[%i] = %lg <--\n", i, st->buf[i]);  //value in stack
+    for (;i < st->size;i++)
+      printf("[%i] = %lg !\n", i, st->buf[i]);    //value out of stack
+    printf("}\n");
 }
 
-void Stack_Assert (int err_code)
+void Stack_Assert (const stack *st)
 {
-    if (err_code)
+    if (Is_Stack_Bad(st))
     {
         Stack_Dump(st);
-        assert(("sorry but this stack isn't deserving your attantion ",err_code));
+        assert(Is_Stack_Bad(st));
     }
 }
 
 void Stack_Realloc(stack* st)
 {
-    if (Is_Stack_Bad(st) != OVERFULL_STK)  Stack_Assert(Is_Stack_Bad(st));
+    if (Is_Stack_Bad(st) != OVERFULL_STK)  Stack_Assert(st);
     st->size += STK_SIZE_STEP;
     st->buf = (double *) realloc(st->buf, st->size * sizeof(double));
-    Stack_Assert(Is_Stack_Bad(st));
+    Stack_Assert(st);
 }
 void Push(stack *st, double elem)
 {
@@ -77,7 +71,13 @@ void Push(stack *st, double elem)
     {
         st->buf[st->count++] = elem;
     }
-    else Stack_Assert(Is_Stack_Bad(st));
+    else
+        if (Is_Stack_Bad(st) == OVERFULL_STK)
+        {
+            Stack_Realloc(st);
+            st->buf[st->count++] = elem;
+        }
+        else Stack_Assert(st);
 }
 
 double Pop(stack *st)
@@ -86,6 +86,17 @@ double Pop(stack *st)
     {
         return st->buf[--st->count];
     }
-    else Stack_Assert(Is_Stack_Bad(st));
-    return Is_Stack_BAd(st);
+    else Stack_Assert(st);
+    return Is_Stack_Bad(st);
+}
+
+double Pop_Without_DEl(stack *st)
+{
+    if (!Is_Stack_Bad(st))
+    {
+        int i = st->count;
+        return st->buf[--i];
+    }
+    else Stack_Assert(st);
+    return Is_Stack_Bad(st);
 }
