@@ -15,7 +15,15 @@
 
 bool List_ctor(List_t *list, int num)
 {
-    if (list == nullptr ||  num < 1) return false;
+    if (list == nullptr || num < 0) return false;
+
+    if (num == 0)
+    {
+        list->num = 0;
+        list->tail = nullptr;
+        list->head = nullptr;
+        return true;
+    }
 
     list->num = num;
 
@@ -46,7 +54,22 @@ bool List_ctor(List_t *list, int num)
 
 bool List_ok(List_t *list)
 {
-    if (list == nullptr || list->head == nullptr || list->tail == nullptr || list->num < 1) return false;
+    if (list == nullptr) return false;
+
+    if (list->num == 0)
+    {
+        if (list->head == nullptr && list->tail == nullptr)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    if (list->head == nullptr || list->tail == nullptr || list->num < 0) return false;
+
     ListNode_t *cur_node = list->head;
     if (list->head->prev != nullptr && list->tail->next != nullptr) return false;
     for (int i = 0; i < list->num; i++)
@@ -61,7 +84,7 @@ bool List_dump(List_t *list)
 {
     if (List_ok (list))
     {
-        printf ("List [0x%p] is OK.\n", list);
+        printf ("List [0x%p] is OK. Num = %d\n", list, list->num);
         ListNode_t *cur_node = list->head;
         for (int i = 0; i < list->num; i++)
         {
@@ -130,7 +153,19 @@ bool List_dtor(List_t *list)
 bool List_insert_after(List_t *list, ListNode_t *node_to_insert, ListNode_t *node)
 {
     assert (List_ok (list));
-    if (list == nullptr || node == nullptr || node_to_insert == nullptr) return false;
+    if (list == nullptr || node_to_insert == nullptr) return false;
+
+    if (list->num == 0 && node == nullptr)
+    {
+        node_to_insert->next = nullptr;
+        node_to_insert->prev = nullptr;
+        list->num = 1;
+        list->head = node_to_insert;
+        list->tail = node_to_insert;
+        return true;
+    }
+
+    if (node == nullptr) return false;
 
     node_to_insert->prev = node;
     node_to_insert->next = node->next;
