@@ -1,10 +1,12 @@
 #include <stdio.h>
 
+//maximum element
 int max(int a, int b)
 {
 	return (a > b) ? a : b;
 }
 
+//calculate answer
 int num(int n, int k)
 {
 	int Y[50][50];
@@ -31,43 +33,23 @@ int num(int n, int k)
 	{
 		for (int j = 3; j <= k; j++)
 		{
-			Y[i][j] = Y[i - 2][j] + Y[i - 2][j - 1] +
-					  Y[i - 3][j - 1] + Y[i - 3][j - 2];
-			printf("%d %d %d ", i, j, Y[i][j]);
+			Y[i][j] = Y[i - 2][j] + Y[i - 2][j - 1] + Y[i - 3][j - 1];
 		}
-		printf("\n");
 	}
 
-	//printf("%d %d ", n, k);	
+		
 	int f = 7;
 	f = Y[n][k];
-	//printf("%d\n", f);
 	return f;
 }
-
-/*long num(int n, int k)
-{
-	//printf("%d %d\n", n, k);
-	if (k != 0)
-	{
-		long f = 0;
-		if (n = k) { f = 1; }
-		else f = num(n - 1, k) + num(n - 1, k - 1);
-		//printf("%d %d %ld\n", n, k, f);
-		return f;
-	}
-	else return 0;
-}*/
 
 int main()
 {
 	int n = 0, k = 0;
 	int y = 0;
-	//scanf("%d %d", &n, &k);
 	n = 15;
 	k = 4;
 	y = num(n, k); 
-	//printf("MAIN\n");
 	printf("%d\n", y);
 	return 0;
 }
