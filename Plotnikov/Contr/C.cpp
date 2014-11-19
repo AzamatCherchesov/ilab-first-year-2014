@@ -5,18 +5,14 @@
 //problem C var #5
 struct students { char name[30]; int score; };
 
-/*void swap(int *a, int *b)
-{
-	int c;
-		c = *a;
-		*a = *b;
-		*b = c;
-}*/
+// setting campare for sort name
 
 int compare_name(const void *a, const void *b)
 {
 	return(strcmp(((students*)a)->name, ((students*)b)->name));
 }
+
+// setting campare for sort score and name
 
 int compare_score(const void *a, const void *b)
 {
@@ -61,6 +57,4 @@ int main()
 	{
 		printf("%s %d\n", student[i].name, student[i].score);
 	};
-	/*if ('a' > 'b') { printf("%c\n", student[1].name[0]); }
-	else { printf("%c\n", student[1].name[1]); };*/
 }
