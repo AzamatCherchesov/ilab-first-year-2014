@@ -7,6 +7,7 @@ don't change it cosualy
 #define STACK_DOUBLE_H
 
 //define area
+#define type_stack double
 #define START_STK_SIZE 10
 #define STK_SIZE_STEP 5
 
@@ -28,7 +29,7 @@ const char ERR[][ERR_STR_MAX_SIZE]={
 };
 
 struct Stack {
-  double *buf;   //the place, where dates are kept
+  type_stack *buf;   //the place, where dates are kept
   int size;      //size of our buffer
   int count;     //current number elements of stak
 };
@@ -68,15 +69,15 @@ void Stack_Realloc(stack* st);
 /*{
   push elem in stack
 }*/
-void Push(stack *st, double elem);
+void Push(stack *st, type_stack elem);
 /*{
   give last value and delete it from stack
 }*/
-double Pop(stack *st);
+type_stack Pop(stack *st);
 /*{
   give last value and don't delete it from stack
 }*/
-double Pop_Without_DEl(stack *st);
+type_stack Pop_Without_DEl(stack *st);
 
 
 
