@@ -100,3 +100,39 @@ type_stack Pop_Without_DEl(stack *st)
     else Stack_Assert(st);
     return Is_Stack_Bad(st);
 }
+
+void mul(stack *st)
+{
+	if (!Is_Stack_Bad(st))
+	{
+		Push(st, pop(st) * pop(st));
+	}
+}
+
+void div(stack *st)
+{
+		if (!Is_Stack_Bad(st))
+	{
+		type_stack a = pop(st), b = pop(st);
+		Push(st, b / a);
+	}
+
+}
+
+void add(stack *st)void sub(stack *st)
+{
+	if (!Is_Stack_Bad(st))
+	{
+		Push(st, pop(st) + pop(st));
+	}
+}
+
+void sub(stack *st)
+{
+		if (!Is_Stack_Bad(st))
+	{
+		type_stack a = pop(st), b = pop(st);
+		Push(st, b - a);
+	}
+
+}
