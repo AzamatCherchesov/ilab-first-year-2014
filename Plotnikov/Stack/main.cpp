@@ -5,7 +5,7 @@ int main()
 {
 	stack_y* stack_memory = (stack_y*)malloc(sizeof(stack_y));
 	stack_memory->previos = NULL;
-	stack_memory->par = 0;
+	//stack_memory->par = 0;
 	for (int i = 8; i <= 100; i+=7)
 		push(i, &stack_memory);
 	for (int i = 0; i <= 10; i++)
