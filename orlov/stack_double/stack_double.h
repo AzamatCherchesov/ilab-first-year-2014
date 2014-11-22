@@ -7,17 +7,18 @@ don't change it cosualy
 #define STACK_DOUBLE_H
 
 //define area
-#define START_STK_SIZE 10
-#define STK_SIZE_STEP 5
+#define type_stack double
+const int START_STK_SIZE = 10;
+const int STK_SIZE_STEP = 5;
 
-#define GOOD_STK 0
-#define BAD_STK 1
-#define OVERFULL_STK 2
-#define BAD_STK_BUF 3
-#define STK_UNSIZED 4
-#define EMPTY_STACK 5
+const int GOOD_STK = 0;
+const int BAD_STK = 1;
+const int OVERFULL_STK = 2;
+const int BAD_STK_BUF = 3;
+const int STK_UNSIZED = 4;
+const int EMPTY_STACK = 5;
 
-const int ERR_STR_MAX_SIZE = 64;
+const int  ERR_STR_MAX_SIZE = 64;
 const char ERR[][ERR_STR_MAX_SIZE]={
     "this is good stack",
     "this is bad stack",
@@ -28,7 +29,7 @@ const char ERR[][ERR_STR_MAX_SIZE]={
 };
 
 struct Stack {
-  double *buf;   //the place, where dates are kept
+  type_stack *buf;   //the place, where dates are kept
   int size;      //size of our buffer
   int count;     //current number elements of stak
 };
@@ -68,16 +69,26 @@ void Stack_Realloc(stack* st);
 /*{
   push elem in stack
 }*/
-void Push(stack *st, double elem);
+void Push(stack *st, type_stack elem);
 /*{
   give last value and delete it from stack
 }*/
-double Pop(stack *st);
+type_stack Pop(stack *st);
 /*{
   give last value and don't delete it from stack
 }*/
-double Pop_Without_DEl(stack *st);
-
+type_stack Pop_Without_DEl(stack *st);
+/*{
+  arithmetic operations with two latest numerals in stack
+  *
+  /
+  +
+  -
+}*/
+void mul(stack *st);
+void div(stack *st);
+void add(stack *st);
+void sub(stack *st);
 
 
 #endif // STACK_DOUBLE_H

@@ -9,7 +9,7 @@ stack* Stack_Ini()
     stack *st;
     st->count = 0;
     st->size = START_STK_SIZE;
-    st->buf = (double *)calloc(st->size, sizeof(double));
+    st->buf = (type_stack *)calloc(st->size, sizeof(type_stack));
 }
 
 stack Stack_Del (stack *st)
@@ -62,10 +62,10 @@ void Stack_Realloc(stack* st)
 {
     if (Is_Stack_Bad(st) != OVERFULL_STK)  Stack_Assert(st);
     st->size += STK_SIZE_STEP;
-    st->buf = (double *) realloc(st->buf, st->size * sizeof(double));
+    st->buf = (type_stack *) realloc(st->buf, st->size * sizeof(type_stack));
     Stack_Assert(st);
 }
-void Push(stack *st, double elem)
+void Push(stack *st, type_stack elem)
 {
     if (!Is_Stack_Bad(st))
     {
@@ -80,7 +80,7 @@ void Push(stack *st, double elem)
         else Stack_Assert(st);
 }
 
-double Pop(stack *st)
+type_stack Pop(stack *st)
 {
     if (!Is_Stack_Bad(st))
     {
@@ -90,7 +90,7 @@ double Pop(stack *st)
     return Is_Stack_Bad(st);
 }
 
-double Pop_Without_DEl(stack *st)
+type_stack Pop_Without_DEl(stack *st)
 {
     if (!Is_Stack_Bad(st))
     {
@@ -99,4 +99,40 @@ double Pop_Without_DEl(stack *st)
     }
     else Stack_Assert(st);
     return Is_Stack_Bad(st);
+}
+
+void mul(stack *st)
+{
+	if (!Is_Stack_Bad(st))
+	{
+		Push(st, pop(st) * pop(st));
+	}
+}
+
+void div(stack *st)
+{
+		if (!Is_Stack_Bad(st))
+	{
+		type_stack a = pop(st), b = pop(st);
+		Push(st, b / a);
+	}
+
+}
+
+void add(stack *st)void sub(stack *st)
+{
+	if (!Is_Stack_Bad(st))
+	{
+		Push(st, pop(st) + pop(st));
+	}
+}
+
+void sub(stack *st)
+{
+		if (!Is_Stack_Bad(st))
+	{
+		type_stack a = pop(st), b = pop(st);
+		Push(st, b - a);
+	}
+
 }
