@@ -15,8 +15,8 @@
 int main ()
 
 {
-    FILE* input = fopen ( "C:\\Project\\asmblr\\text of programm.txt", "r" );
-    FILE* output = fopen ( "C:\\Project\\asmblr\\corrected.txt", "wb" );
+    FILE* input = fopen ( "text of programm.txt", "r" );
+    FILE* output = fopen ( "corrected.txt", "wb" );
 
     if ( !input )
 
