@@ -1,6 +1,5 @@
 in
 call _frac
-out
 end
 :frac
 dup
@@ -11,5 +10,7 @@ push 1
 sub
 call _frac
 mul
+dup
+out
 :l1
 ret
