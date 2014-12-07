@@ -17,29 +17,21 @@ Stack* stack_ctor ( int sz )
 
     st -> data = ( int* ) calloc ( st->size_st, sizeof(int) );
 
-    st -> err_code = S_OK;
-
     if ( st->data == NULL )
     {
-        st -> err_code = S_ERR_NO_DATA;
+        free ( st );
 
         return NULL;
     }
 
     assert ( ok_st ( st ) == S_OK );
 
-    st -> err_code = S_OK;
 
     return st;
 }
 
 int push_st ( Stack* st, int elem_st )
 {
-    // A little crutch. Program doesn't stop now if it is empty.
-    if ( st -> err_code == S_ERR_EMPTY_STACK )
-    {
-        st -> err_code = S_OK;
-    }
 
     assert ( ok_st ( st ) == S_OK );
 
@@ -56,61 +48,38 @@ int push_st ( Stack* st, int elem_st )
 
     assert ( ok_st ( st ) == S_OK );
 
-    st -> err_code = S_OK;
-
     return S_OK;
 }
 
 int is_empty_st ( Stack* st )
 {
-    // A little crutch. Program doesn't stop now if it is empty.
-    if ( st -> err_code == S_ERR_EMPTY_STACK )
-    {
-        st -> err_code = S_OK;
-    }
 
     assert ( ok_st ( st ) == S_OK );
-
-    st -> err_code = S_OK;
 
     return st -> count_st == 0;
 }
 
-int is_full_st ( Stack* st )
+/*int is_full_st ( Stack* st )
 {
-    // A little crutch. Program doesn't stop now if it is empty.
-    if ( st -> err_code == S_ERR_EMPTY_STACK )
-    {
-        st -> err_code = S_OK;
-    }
 
     assert ( ok_st ( st ) == S_OK );
 
-    st -> err_code = S_OK;
-
     return st -> count_st >= st -> size_st;
-}
+}*/
 
 int pop_st ( Stack* st )
 {
-    // A little crutch. Program doesn't stop now if it is empty.
-    if ( st -> err_code == S_ERR_EMPTY_STACK )
-    {
-        st -> err_code = S_OK;
-    }
 
     assert ( ok_st ( st ) == S_OK );
 
     if ( is_empty_st ( st ) ) // return S_ERR_EMPTY_STACK;
     {
-        st -> err_code = S_ERR_EMPTY_STACK;
 
         return S_ERR_EMPTY_STACK;
+
     }
 
     st -> count_st --;
-
-    st -> err_code = S_OK;
 
     return st -> data [ st -> count_st ];
 }
@@ -120,33 +89,26 @@ int ok_st ( Stack* st )
 {
     if ( st == NULL ) //return S_ERR_NO_STACK;
     {
-        st -> err_code = S_ERR_NO_STACK;
+        return S_ERR_NO_STACK;
     }
 
-    else if ( st -> data == NULL ) //return S_ERR_NO_DATA;
+    if ( st -> data == NULL ) //return S_ERR_NO_DATA;
     {
-        st -> err_code = S_ERR_NO_DATA;
+        return S_ERR_NO_DATA;
     }
 
-    // I don't think that empty stack is an error
-    /*
-    if ( st -> err_code == S_ERR_EMPTY_STACK )
+    if ( ( st -> count_st < 0 )&&( st -> size_st <0 )&&( st -> count_st > st -> size_st ) )
     {
-        st -> err_code = S_OK;
+        return S_WRONG_COUNTER;
     }
-    */
 
-    //if ( st -> err_code != S_OK ) return st -> err_code;
 
-    return st -> err_code;
-
-    //return S_OK;
 }
 
 
 Stack* stack_dtor ( Stack* st )
 {
-    free ( st -> data ); // Only for the first stack.
+    free ( st -> data );
     free ( st         );
 
     st = NULL;
@@ -157,11 +119,6 @@ Stack* stack_dtor ( Stack* st )
 
 int expand_st ( Stack* st )
 {
-    // A little crutch. Program doesn't stop now if it is empty.
-    if ( st -> err_code == S_ERR_EMPTY_STACK )
-    {
-        st -> err_code = S_OK;
-    }
 
     assert ( ok_st ( st ) == S_OK );
 
@@ -171,12 +128,8 @@ int expand_st ( Stack* st )
 
     if ( !( st -> data ) ) //return S_ERR_EXPANSION;
     {
-        st -> err_code = S_ERR_EXPANSION;
-
         return S_ERR_EXPANSION;
     }
-
-    st -> err_code = S_OK;
 
     return S_OK;
 }
@@ -184,7 +137,7 @@ int expand_st ( Stack* st )
 
 int dump_st ( Stack* st )
 {
-    printf ( "--dump-st-- WE BEGIN OUR DUMP.\n" );
+    printf ( "--dump-st-- \n" );
 
     int i = 0;
 
@@ -202,12 +155,6 @@ int dump_st ( Stack* st )
 
 int top_st ( Stack* st )
 {
-    // A little crutch. Program doesn't stop now if it is empty.
-    if ( st -> err_code == S_ERR_EMPTY_STACK )
-    {
-        st -> err_code = S_OK;
-    }
-
     assert ( ok_st ( st ) == S_OK );
 
     if ( is_empty_st ( st ) ) //return S_ERR_EMPTY_STACK;
@@ -216,8 +163,6 @@ int top_st ( Stack* st )
 
         return S_ERR_EMPTY_STACK;
     }
-
-    st -> err_code = S_OK;
 
     return st->data [ st->count_st ];
 }
