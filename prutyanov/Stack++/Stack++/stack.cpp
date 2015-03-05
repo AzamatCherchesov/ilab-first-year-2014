@@ -21,8 +21,8 @@ Stack::~Stack()
 {
     delete[] data;
     data = nullptr;
-    count = -1;
-    size = -1;
+    count = 0;
+    size = 0;
 }
 
 bool Stack::Push(int value)
@@ -69,7 +69,7 @@ bool Stack::Pop(int *value)
 
 bool Stack::Ok()
 {
-    return !((count < 0) || (size < 0) || (count > size) || (data == nullptr));
+    return !((count > size) || (data == nullptr));
 }
 
 bool Stack::Dump(FILE *file)
@@ -77,7 +77,7 @@ bool Stack::Dump(FILE *file)
     if (Ok ())
     {
         fprintf (file, "Stack [0x%x] is OK. \n\tcount = %d\n\tsize = %d\n\tdata [0x%x]:\n", this, count, size, data);
-        for (int i = 0; i < count; i++)
+        for (size_t i = 0; i < count; i++)
         {
             printf("\t[%d] %d\n", i, *(data + i));
         }
