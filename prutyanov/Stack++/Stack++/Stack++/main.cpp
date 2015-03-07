@@ -28,4 +28,6 @@ int main()
     #ifdef _DEBUG
         system ("pause");
     #endif
+
+    return EXIT_SUCCESS;
 }
