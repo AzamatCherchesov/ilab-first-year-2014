@@ -13,16 +13,21 @@
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
+#include <vector>
+#include <ostream>
 
+using std::vector;
+
+template <typename T>
 class Stack
 {
 public:
     Stack(size_t size);
     ~Stack();
-    bool Push(int value);
-    bool Pop(int *value);
+    void Push(T value);
+    T Pop();
     bool Ok();
-    bool Dump(FILE *file);
+    bool Dump(FILE *dump_file);
     bool IsFull();
     bool IsEmpty();
     size_t GetSize();
@@ -30,5 +35,5 @@ public:
 private:
     size_t size;
     size_t count;
-    int *data;
+    vector<T> v_data;
 };
