@@ -10,20 +10,38 @@
 *   @author Viktor Prutyanov mailto:vitteran@gmail.com 
 */
 
+#define test_Pop std::cout << stack.Pop() << " popped.\n";
+#define test_Push stack.Push(rand());
+#define test_Dump stack.Dump(stdout);
+
 #include "stack.h"
 #include <iostream>
 
 int main()
 {
     Stack<int> stack (3);
-    stack.Dump(stdout);
-    stack.Push(1);
-    stack.Push(2);
-    stack.Push(3);
-	stack.Dump(stdout);
-    stack.Push(4);
-	stack.Dump(stdout);
-	std::cout << stack.Pop() << "\n";
+	test_Dump;
+	test_Push;
+	test_Push;
+	test_Push;
+	test_Dump;
+	test_Push;
+	test_Dump;
+	test_Pop;
+	test_Pop;
+	test_Pop;
+	test_Pop;
+	test_Dump;
+	std::cout << "Now we will try to pop from empty stack.\n";
+	try
+	{
+		test_Pop;
+	}
+	catch (const std::out_of_range& e)
+	{
+		std::cout << e.what() << "\n";
+	}
+	test_Dump;
 
     #ifdef _DEBUG
         system ("pause");
