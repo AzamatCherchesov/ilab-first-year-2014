@@ -10,9 +10,11 @@
 *   @author Viktor Prutyanov mailto:vitteran@gmail.com 
 */
 
+//TODO: Add comments.
+
 #define test_Pop(x) std::cout << stack##x.Pop() << " popped.\n";
 #define test_Push(x) stack##x.Push(rand());
-#define test_Dump(x) stack##x.Dump(stdout);
+#define test_Dump(x) stack##x.Dump(&std::cout);
 
 #include "stack.h"
 #include <iostream>
@@ -32,6 +34,7 @@ int main()
 	test_Pop(1);
 	test_Pop(1);
 	test_Dump(1);
+
 	std::cout << "Now we will try to pop from empty stack.\n";
 	try
 	{
@@ -51,18 +54,44 @@ int main()
 	stack2.Push(0);
 	stack2.Push(0);
 	stack2.Push(1);
+	test_Dump(2);
+	stack2.Push(1);
+	stack2.Push(1);
 	stack2.Push(0);
+	stack2.Push(1);
+	test_Dump(2);
 	stack2.Push(0);
+	stack2.Push(1);
+	stack2.Push(0);
+	stack2.Push(1);
+	stack2.Push(0);
+	stack2.Push(1);
 	stack2.Push(1);
 	stack2.Push(1);
 	test_Dump(2);
 	stack2.Push(1);
 	stack2.Push(0);
-	stack2.Push(1);
-	stack2.Push(1);
-	stack2.Push(1);
-	stack2.Push(0);
 	test_Dump(2);
+	test_Pop(2);
+	test_Pop(2);
+	test_Pop(2);
+	test_Dump(2);
+
+	for (size_t i = 0; i < 15; i++)
+	{
+		test_Pop(2);
+	}
+	test_Dump(2);
+
+	std::cout << "Now we will try to pop from empty stack.\n";
+	try
+	{
+		test_Pop(2);
+	}
+	catch (const std::out_of_range& e)
+	{
+		std::cout << e.what() << "\n";
+	}
 
     #ifdef _DEBUG
         system ("pause");

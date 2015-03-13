@@ -10,15 +10,16 @@
 *   @author Viktor Prutyanov mailto:vitteran@gmail.com 
 */
 
+//TODO: Add comments.
+
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
 #include <exception>
+#include <iostream>
 #include <vector>
-#include <bitset>
 
 using std::vector;
-using std::bitset;
 
 template <typename T>
 class Stack
@@ -29,7 +30,7 @@ public:
     void Push(T value);
     T Pop();
     bool Ok();
-    bool Dump(FILE *dump_file);
+    bool Dump(std::ostream *dump_stream);
     bool IsFull();
     bool IsEmpty();
     size_t GetSize();
@@ -48,14 +49,13 @@ public:
 	void Push(bool value);
 	bool Pop();
 	bool Ok();
-	bool Dump(FILE *dump_file);
+	bool Dump(std::ostream *dump_stream);
 	bool IsFull();
 	bool IsEmpty();
 	size_t GetSize();
 	size_t GetCount();
 private:
-	size_t index;
-	size_t bit_count;
+	size_t count;
 	vector<unsigned char> v_data;
 };
 
@@ -67,7 +67,7 @@ Stack<T>::Stack(size_t size)
 }
 
 Stack<bool>::Stack(size_t size) 
-	: index (0), bit_count (0), v_data (vector<unsigned char>((size % 8 == 0) ? size : size / 8 + 1, 0))
+	: count (0), v_data (vector<unsigned char>((size % 8 == 0) ? size : size / 8 + 1, 0))
 {
 	//Nothing to do
 }
@@ -82,7 +82,7 @@ Stack<T>::~Stack()
 Stack<bool>::~Stack()
 {
 	v_data.~vector();
-	index = 0;
+	count = 0;
 }
 
 template <typename T>
@@ -101,22 +101,19 @@ void Stack<T>::Push(T value)
 
 void Stack<bool>::Push(bool bit_value)
 {
-	if (index + 1 == v_data.size() && bit_count == 8)
+	if (count == v_data.size() * 8)
 	{
 		v_data.push_back((bit_value ? 1 : 0) << 7);
-		bit_count = 1;
-		index++;
 	}
-	else if (index != v_data.size() && bit_count == 8)
+	else if (count != v_data.size() * 8 && count % 8 == 0)
 	{
-		v_data.at(index) = (bit_value ? 1 : 0) << 7;
-		bit_count = 1;
+		v_data.at(count / 8) = (bit_value ? 1 : 0) << 7;
 	}
 	else
 	{
-		v_data.at(index) |= (bit_value ? 1 : 0) << (7 - bit_count);
-		bit_count++;
+		v_data.at(count / 8) |= (bit_value ? 1 : 0) << (7 - count % 8);
 	}
+	count++;
 }
 
 template <typename T>
@@ -127,10 +124,24 @@ T Stack<T>::Pop()
 		throw std::out_of_range("Attemp to pop from empty stack. Nothing is done.");
 		return 0;
 	}
-	T value = v_data.at(count - 1);
-	count--;
-	return value;
+	return v_data.at(--count);
 }
+
+bool Stack<bool>::Pop()
+{
+	if (count == 0)
+	{
+		throw std::out_of_range("Attemp to pop from empty stack. Nothing is done.");
+		return 0;
+	}
+	else
+	{
+		bool value = (v_data.at(count / 8 - (count % 8 == 0 ? 1 : 0)) >> (count % 8 == 0 ? 1 : 8 - count % 8)) & 1;
+		count--;
+		return value;
+	}
+}
+
 
 template <typename T>
 bool Stack<T>::Ok()
@@ -140,54 +151,54 @@ bool Stack<T>::Ok()
 
 bool Stack<bool>::Ok()
 {
-	return !(index > v_data.size() || bit_count > 8);
+	return !(count > v_data.size() * 8);
 }
 
 template <typename T>
-bool Stack<T>::Dump(FILE *dump_file)
+bool Stack<T>::Dump(std::ostream *dump_stream)
 {
 	if (Ok())
 	{
-		fprintf(dump_file, "Stack [0x%x] is OK. \n\tCount = %d Size = %d Capacity = %d\n", this, count, v_data.size(), v_data.capacity());
+		*dump_stream << "Stack is OK. \n\tCount = " << count << " Size = " << v_data.size() << " Capacity = " << v_data.capacity() << "\n";
 		for (size_t i = 0; i < count; i++)
 		{
-			fprintf(dump_file, "\t[%d] %d\n", i, v_data.at(i));
+			*dump_stream << "\t[" << i << "] " << v_data.at(i) << "\n";
 		}
 		return true;
 	}
 	else
 	{
-		fprintf(dump_file, "Stack [0x%x] is NOT OK. \n\tCount = %d Size = %d Capacity = %d\n", this, count, v_data.size(), v_data.capacity());
+		*dump_stream << "Stack is CORRUPTED. \n\tCount = " << count << " Size = " << v_data.size() << " Capacity = " << v_data.capacity() <<  "\n";
 		return false;
 	}
 }
 
-bool Stack<bool>::Dump(FILE *dump_file)
+bool Stack<bool>::Dump(std::ostream *dump_stream)
 {
 	if (Ok())
 	{
-		fprintf(dump_file, "Stack [0x%x] is OK. \n\tIndex = %d Bit_count = %d Size = %d Capacity = %d\n", this, index, bit_count, v_data.size(), v_data.capacity());
-		for (size_t i = 0; i <= index; i++)
+		*dump_stream << "Stack is OK. \n\tCount = " << count << " Size = " << v_data.size() << " Capacity = " << v_data.capacity() << "\n";
+		for (size_t i = 0; i < count / 8 + ((count % 8 == 0) ? 0 : 1) ; i++)
 		{
-			fprintf(dump_file, "\t[%d] ", i);
+			*dump_stream << "\t[" << i * 8 << "-" << i*8 + 7 << "] ";
 			for (size_t j = 0; j < 8; j++)
 			{
-				if (j >= bit_count && i == index)
+				if ((j >= count % 8) && (i == count / 8))
 				{
-					fprintf(dump_file, "_");
+					*dump_stream << "_";
 				}
 				else
 				{
-					fprintf(dump_file, "%d", (v_data.at(i) >> (7 - j)) & 1);
+					*dump_stream << ((v_data.at(i) >> (7 - j)) & 1);
 				}
 			}
-			fprintf(dump_file, "\n");
+			*dump_stream << "\n";
 		}
 		return true;
 	}
 	else
 	{
-		fprintf(dump_file, "Stack [0x%x] is NOT OK. \n\tIndex = %d Bit_count = %d Size = %d Capacity = %d\n", this, index, bit_count, v_data.size(), v_data.capacity());
+		*dump_stream << "Stack is CORRUPTED. \n\tCount = " << count << " Size = " << v_data.size() << " Capacity = " << v_data.capacity() << "\n";
 		return false;
 	}
 }
@@ -198,8 +209,19 @@ bool Stack<T>::IsFull()
 	return (count == v_data.size());
 }
 
+bool Stack<bool>::IsFull()
+{
+	return (count == v_data.size());
+}
+
+
 template <typename T>
 bool Stack<T>::IsEmpty()
+{
+	return (count == 0);
+}
+
+bool Stack<bool>::IsEmpty()
 {
 	return (count == 0);
 }
@@ -212,11 +234,16 @@ size_t Stack<T>::GetCount()
 
 size_t Stack<bool>::GetCount()
 {
-	return index + 1;
+	return count;
 }
 
 template <typename T>
 size_t Stack<T>::GetSize()
+{
+	return v_data.size();
+}
+
+size_t Stack<bool>::GetSize()
 {
 	return v_data.size();
 }
