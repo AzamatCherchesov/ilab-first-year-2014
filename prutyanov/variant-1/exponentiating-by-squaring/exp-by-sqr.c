@@ -13,7 +13,7 @@ unsigned int pow(unsigned int base, unsigned int power)
     unsigned int result = 1;
     while (power != 0) 
     {
-        if (power & 1)
+        if (power % 2 == 1)
         {
             power--;
             result *= base;
@@ -21,7 +21,7 @@ unsigned int pow(unsigned int base, unsigned int power)
         else
         {
             power >>= 1;
-            result *= result;
+            base *= base;
         }
         
     }
