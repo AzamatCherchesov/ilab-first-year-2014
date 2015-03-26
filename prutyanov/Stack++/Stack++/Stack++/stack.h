@@ -26,6 +26,7 @@ class Stack
 {
 public:
     Stack(size_t size);
+	Stack(const Stack<T>& stack);
     ~Stack();
     void Push(T value);
     T Pop();
@@ -45,6 +46,7 @@ class Stack<bool>
 {
 public:
 	Stack(size_t size);
+	Stack(const Stack<bool>& stack);
 	~Stack();
 	void Push(bool value);
 	bool Pop();
@@ -66,8 +68,21 @@ Stack<T>::Stack(size_t size)
 	//Nothing to do
 }
 
+template <typename T>
+Stack<T>::Stack(const Stack<T>& stack)
+	: count (stack.count), v_data (vector<T>(stack.v_data))
+{
+	//Nothing to do
+}
+
 Stack<bool>::Stack(size_t size) 
 	: count (0), v_data (vector<unsigned char>((size % 8 == 0) ? size : size / 8 + 1, 0))
+{
+	//Nothing to do
+}
+
+Stack<bool>::Stack(const Stack<bool>& stack)
+	: count(stack.count),	v_data(vector<unsigned char>(stack.v_data))
 {
 	//Nothing to do
 }
@@ -177,10 +192,10 @@ bool Stack<bool>::Dump(std::ostream *dump_stream)
 {
 	if (Ok())
 	{
-		*dump_stream << "Stack is OK. \n\tCount = " << count << " Size = " << v_data.size() << " Capacity = " << v_data.capacity() << "\n";
+		*dump_stream << "Stack is OK. \n\tCount = " << count << " Size = " << 8 * v_data.size() << " Capacity = " << 8 * v_data.capacity() << "\n";
 		for (size_t i = 0; i < count / 8 + ((count % 8 == 0) ? 0 : 1) ; i++)
 		{
-			*dump_stream << "\t[" << i * 8 << "-" << i*8 + 7 << "] ";
+			*dump_stream << "\t[" << i * 8 << "-" << i * 8 + 7 << "] ";
 			for (size_t j = 0; j < 8; j++)
 			{
 				if ((j >= count % 8) && (i == count / 8))
@@ -245,5 +260,5 @@ size_t Stack<T>::GetSize()
 
 size_t Stack<bool>::GetSize()
 {
-	return v_data.size();
+	return v_data.size() * 8;
 }

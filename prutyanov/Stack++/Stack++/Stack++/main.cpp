@@ -29,6 +29,11 @@ int main()
 	test_Dump(1);
 	test_Push(1);
 	test_Dump(1);
+
+	Stack<int> stack1_copy(stack1);
+	std::cout << "Stack1 has copied. Copy dump: ";
+	stack1_copy.Dump(&std::cout);
+
 	test_Pop(1);
 	test_Pop(1);
 	test_Pop(1);
@@ -72,6 +77,11 @@ int main()
 	stack2.Push(1);
 	stack2.Push(0);
 	test_Dump(2);
+
+	Stack<bool> stack2_copy(stack2);
+	std::cout << "Stack2 has copied. Copy dump: ";
+	stack2_copy.Dump(&std::cout);
+
 	test_Pop(2);
 	test_Pop(2);
 	test_Pop(2);
