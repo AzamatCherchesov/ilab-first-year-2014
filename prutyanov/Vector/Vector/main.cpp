@@ -36,13 +36,36 @@ int main()
     }
     catch (const std::out_of_range& e)
     {
-        printf(e.what());
-        printf("\n");
+        printf("%s\n", e.what());
     }
 
-	#ifdef _DEBUG
-		system("pause");
-	#endif
+    vector2.dump();
+    vector2.insert(2, 9);
+    vector2.insert(2, 8);
+    vector2.dump();
+    vector2.resize(3, 4);
+    vector2.dump();
+    vector2.resize(6, 4);
+    vector2.dump();
+    vector2.insert(6, 50);
+    vector2.dump();
+    vector2.resize(10, 3);
+    vector2.dump();
+    vector2.insert(5, 5);
+    vector2.dump();
+    vector2.insert(vector2.size(), 10);
+    vector2.dump();
+    vector2.insert(11, 144);
+    vector2.dump();
+    try
+    {
+        vector2.insert(15, 123);
+    }
+    catch (const std::length_error& e)
+    {
+        printf("%s\n", e.what());
+    }
+    vector2.dump();
 
-	return EXIT_SUCCESS;
+	return 0;
 }
